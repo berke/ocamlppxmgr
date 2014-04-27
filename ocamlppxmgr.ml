@@ -1,21 +1,6 @@
-(* Try it on:
-
-   [@@@ppx]
-
-   [@@@ppx.getenv ("control","on")]
-   let a = [%getenv "USER"]
-
-   [@@@ppx.getenv ("rename","your_mother")]
-   [@@@ppx.your_mother ("control","on")]
-   [@@@ppx.your_father ("control","on")]
-
-   let b = [%your_mother "USER"]
-
-   [@@@ppx.your_mother ("rename","your_aunt")]
-   let c = [%your_father "USER"]
-   [@@@ppx.your_aunt ("control","off")]
-   let d = [%your_father "USER"]
-
+(* Ocamlppxmgr
+ 
+   Author: Berke Durak
 *)
 
 open Ast_mapper
