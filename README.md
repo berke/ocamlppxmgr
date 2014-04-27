@@ -1,6 +1,6 @@
 ocamlppxmgr - WORK IN PROGRESS
 ==============================
-Berke Durak <berke.durak@gmail.com
+Berke Durak <berke.durak@gmail.com>
 
 WARNING
 -------
@@ -35,8 +35,30 @@ Rules
   matching name.  No more "I'll silently mess with your AST just because I
   happen to be loaded"!
 
-Dependncies
------------
+Directives
+----------
+
+* ("enable","NAME") - Enable extension "NAME" for the rest of the source
+* ("disable","NAME") - Disable extension "NAME" for the rest of the source
+* ("alias","NAME1","NAME2") - Create a new alias "NAME1" for "NAME"
+* ("hide","NAME") - Hide "NAME" from current extensions
+* ("rename","NAME") - Change the attribute name for ocamlppxmgr itself to "NAME"
+* ("control","off") - Disable ocamlppxmgr itself
+* ("control","on") - Enable ocamlppxmgr itself
+
+Invocation
+----------
+
+* For ocamlppxmgr itself, the arguments are:
+  ocamlppxmgr.byte \
+    -path /path/to/my/extensions \
+    ext1 -arg ext1arg1 -ext ext1arg2 ... -ext ext1argn1 \
+    ext2 -arg ext2arg1 -ext ext2arg2 ... -ext ext2argn2 \
+    ...
+* To see it in action, use: ocamlc -ppx "..." -dsource -c foo.ml
+
+Dependencies
+------------
 
 * Ocaml with recent compiler libs 4.02.0dev+trunk
 
