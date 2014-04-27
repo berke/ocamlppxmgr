@@ -35,16 +35,51 @@ Rules
   matching name.  No more "I'll silently mess with your AST just because I
   happen to be loaded"!
 
+Writing dynamically loadable extensions
+---------------------------------------
+
+Extensions must register themselves using the existing Ast_mapper API:
+
+```ocaml
+let _ =
+  Ast_mapper.register "example_extension" mapper
+```
+
+They will get any extension-specific arguments added with -arg.
+They will only be called if they are enabled and on a toplevel node decorated
+with a name to which they resolve.
+
 Directives
 ----------
+
+Directives are entered as
+```ocaml
+[@@@syntax ("command","ARG1","ARG2",...)]
+```
 
 * ("enable","NAME") - Enable extension "NAME" for the rest of the source
 * ("disable","NAME") - Disable extension "NAME" for the rest of the source
 * ("alias","NAME1","NAME2") - Create a new alias "NAME1" for "NAME"
 * ("hide","NAME") - Hide "NAME" from current extensions
-* ("rename","NAME") - Change the attribute name for ocamlppxmgr itself to "NAME"
-* ("control","off") - Disable ocamlppxmgr itself
-* ("control","on") - Enable ocamlppxmgr itself
+* ("rename","NAME") - Change the attribute name (by default syntax) for
+  ocamlppxmgr itself to "NAME".
+* ("control","off") - Disable ocamlppxmgr itself.
+* ("control","on") - Enable ocamlppxmgr itself.
+
+Example
+-------
+
+```ocaml
+(* Example foo.ml *)
+
+[@@@syntax ("enable","example_extension")]
+let a = [%example_extension "USER"]
+[@@@syntax ("alias","foo","example_extension")]
+let b = [%foo "USER"]
+let c = [%example_extension "USER"]
+[@@@syntax ("hide","example_extension")]
+let d = [%foo "USER"]
+```
 
 Invocation
 ----------
